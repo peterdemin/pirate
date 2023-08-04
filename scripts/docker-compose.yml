@@ -31,3 +31,33 @@ services:
     ports:
       - 7878:7878
     restart: unless-stopped
+
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - /configs/sonarr:/config
+      - /data:/tv
+      - /downloads:/downloads
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+
+  sabnzbd:
+    image: lscr.io/linuxserver/sabnzbd:latest
+    container_name: sabnzbd
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - /configs/sabnzbd:/config
+      - /downloads:/downloads
+      - /downloads/incomplete:/downloads/incomplete
+    ports:
+      - 8080:8080
+    restart: unless-stopped
