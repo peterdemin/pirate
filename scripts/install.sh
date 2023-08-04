@@ -43,3 +43,4 @@ WantedBy=multi-user.target
 EOF
 
 systemctl enable docker-compose-app
+systemctl start docker-compose-app
