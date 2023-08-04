@@ -20,3 +20,26 @@ echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docke
 ## Install Docker Engine
 apt-get update
 apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+
+# Configure docker compose systemd unit
+cat >/etc/systemd/system/docker-compose-app.service <<EOF
+[Unit]
+Description=Docker Compose
+Requires=docker.service
+After=docker.service
+
+[Service]
+RemainAfterExit=yes
+WorkingDirectory=/srv/docker
+ExecStart=docker compose up
+ExecStop=docker compose down
+TimeoutStartSec=0
+Restart=on-failure
+StartLimitBurst=3
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+systemctl enable docker-compose-app

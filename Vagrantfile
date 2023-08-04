@@ -8,6 +8,7 @@ Vagrant.configure("2") do |config|
 
     jammy.vm.network "private_network", ip: "192.168.56.56"
     jammy.vm.synced_folder "data", "/data"
+    jammy.vm.synced_folder "scripts", "/scripts"
     jammy.vm.synced_folder "configs", "/configs"
 
     jammy.vm.provider "virtualbox" do |vb|
