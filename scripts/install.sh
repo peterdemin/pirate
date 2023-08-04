@@ -31,7 +31,7 @@ After=docker.service
 
 [Service]
 RemainAfterExit=yes
-WorkingDirectory=/srv/docker
+WorkingDirectory=/scripts
 ExecStart=docker compose up
 ExecStop=docker compose down
 TimeoutStartSec=0
