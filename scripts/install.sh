@@ -21,7 +21,6 @@ echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docke
 apt-get update
 apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-
 # Configure docker compose systemd unit
 cat >/etc/systemd/system/docker-compose-app.service <<EOF
 [Unit]
@@ -44,3 +43,6 @@ EOF
 
 systemctl enable docker-compose-app
 systemctl start docker-compose-app
+
+# Install and configure nginx front page
+apt-get install -y nginx
