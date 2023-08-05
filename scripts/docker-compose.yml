@@ -12,7 +12,7 @@ services:
       - RUN_OPTS= #optional
     volumes:
       - /configs/jackett:/config
-      - /downloads:/downloads
+      - /data/downloads:/downloads
     ports:
       - 9117:9117
     restart: unless-stopped
@@ -26,8 +26,8 @@ services:
       - TZ=Etc/UTC
     volumes:
       - /configs/radarr:/config
-      - /data:/movies
-      - /downloads:/downloads
+      - /data/movies:/movies
+      - /data/downloads:/downloads
     ports:
       - 7878:7878
     restart: unless-stopped
@@ -41,8 +41,8 @@ services:
       - TZ=Etc/UTC
     volumes:
       - /configs/sonarr:/config
-      - /data:/tv
-      - /downloads:/downloads
+      - /data/tv:/tv
+      - /data/downloads:/downloads
     ports:
       - 8989:8989
     restart: unless-stopped
@@ -56,8 +56,8 @@ services:
       - TZ=Etc/UTC
     volumes:
       - /configs/sabnzbd:/config
-      - /downloads:/downloads
-      - /downloads/incomplete:/downloads/incomplete
+      - /data/downloads:/downloads
+      - /data/incomplete:/downloads/incomplete
     ports:
       - 8080:8080
     restart: unless-stopped
@@ -72,7 +72,7 @@ services:
       - DELUGE_LOGLEVEL=error
     volumes:
       - /configs/deluge:/config
-      - /downloads:/downloads
+      - /data/downloads:/downloads
     ports:
       - 8112:8112
       - 6881:6881
