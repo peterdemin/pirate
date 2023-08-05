@@ -73,5 +73,9 @@ if [ "${NORDVPN_TOKEN}" ]
 then
     sh <(curl -sSf https://downloads.nordcdn.com/apps/linux/install.sh) -- -n
     nordvpn login --token "${NORDVPN_TOKEN}"
+    ## Whitelist local network BEFORE connecting
+    ip route \
+        | grep -oE '[0-9]{2,3}\.[0-9]{1,3}\.[0-9]{1,3}\.0\/[0-9]{2}' \
+        | xargs -L1 nordvpn whitelist add subnet
     nordvpn connect
 fi
