@@ -46,3 +46,21 @@ systemctl start docker-compose-app
 
 # Install nginx (configuration is in synced_dirs)
 yes N | apt-get install -y nginx
+
+RADARR_IS_UP=""
+for i in $(seq 60)
+do
+    echo "Attempt #${i} to check if radarr is up"
+    if curl -sf http://localhost/radarr >/dev/null
+    then
+        RADARR_IS_UP="1"
+        break
+    else
+        sleep 10
+    fi
+done
+
+if [ ! $RADARR_IS_UP ]
+then
+    exit 1
+fi
