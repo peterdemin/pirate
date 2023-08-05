@@ -47,6 +47,7 @@ systemctl start docker-compose-app
 # Install nginx (configuration is in synced_dirs)
 yes N | apt-get install -y nginx
 
+# Wait for Radarr to create config files on first start
 RADARR_IS_UP=""
 for i in $(seq 60)
 do
@@ -62,5 +63,6 @@ done
 
 if [ ! $RADARR_IS_UP ]
 then
+    echo "Radarr failed to start in 5 minutes, aborting"
     exit 1
 fi
