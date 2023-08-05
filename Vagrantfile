@@ -7,6 +7,7 @@ Vagrant.configure("2") do |config|
     jammy.vm.box = "ubuntu/jammy64"
 
     jammy.vm.network "private_network", ip: "192.168.56.56"
+    jammy.vm.network "forwarded_port", guest: 80, host: 8888
     jammy.vm.synced_folder "data", "/data"
     jammy.vm.synced_folder "scripts", "/scripts"
     jammy.vm.synced_folder "configs", "/configs"
