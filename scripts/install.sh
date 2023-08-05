@@ -45,7 +45,8 @@ systemctl enable docker-compose-app
 systemctl start docker-compose-app
 
 # Install nginx (configuration is in synced_dirs)
-yes N | apt-get install -y nginx
+## (it fails on repeated installs for some reason, mute)
+yes N | apt-get install -y nginx || true
 
 
 # Set base URL to make it work with nginx subdirectories
