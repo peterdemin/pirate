@@ -64,3 +64,14 @@ until [ -f /configs/jackett/Jackett/ServerConfig.json ]; do sleep 1; done
 sed -i 's#"BasePathOverride": null,#"BasePathOverride": "/jackett",#' /configs/jackett/Jackett/ServerConfig.json
 
 systemctl restart docker-compose-app
+
+# Install and configure VPN
+
+# shellcheck source=/dev/null
+source /scripts/install.env
+if [ "${NORDVPN_TOKEN}" ]
+then
+    sh <(curl -sSf https://downloads.nordcdn.com/apps/linux/install.sh) -- -n
+    nordvpn login --token "${NORDVPN_TOKEN}"
+    nordvpn connect
+fi
