@@ -44,5 +44,5 @@ EOF
 systemctl enable docker-compose-app
 systemctl start docker-compose-app
 
-# Install and configure nginx front page
-apt-get install -y nginx
+# Install nginx (configuration is in synced_dirs)
+yes N | apt-get install -y nginx
