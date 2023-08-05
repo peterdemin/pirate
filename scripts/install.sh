@@ -47,22 +47,19 @@ systemctl start docker-compose-app
 # Install nginx (configuration is in synced_dirs)
 yes N | apt-get install -y nginx
 
-# Wait for Radarr to create config files on first start
-RADARR_IS_UP=""
-for i in $(seq 60)
-do
-    echo "Attempt #${i} to check if radarr is up"
-    if curl -sf http://localhost/radarr >/dev/null
-    then
-        RADARR_IS_UP="1"
-        break
-    else
-        sleep 10
-    fi
-done
 
-if [ ! $RADARR_IS_UP ]
-then
-    echo "Radarr failed to start in 5 minutes, aborting"
-    exit 1
-fi
+# Set base URL to make it work with nginx subdirectories
+
+## Wait for Radarr to create config file on first start and edit it
+until [ -f /configs/radarr/config.xml ]; do sleep 1; done
+sed -i 's#<UrlBase></UrlBase>#<UrlBase>/radarr</UrlBase>#' /configs/radarr/config.xml
+
+## Wait for Sonarr to create config file on first start and edit it
+until [ -f /configs/sonarr/config.xml ]; do sleep 1; done
+sed -i 's#<UrlBase></UrlBase>#<UrlBase>/radarr</UrlBase>#' /configs/sonarr/config.xml
+
+## Wait for Jackett to create config file on first start and edit it
+until [ -f /configs/jackett/Jackett/ServerConfig.json ]; do sleep 1; done
+sed -i 's#"BasePathOverride": null,#"BasePathOverride": "/jackett",#' /configs/jackett/Jackett/ServerConfig.json
+
+systemctl restart docker-compose-app
