@@ -57,7 +57,7 @@ sed -i 's#<UrlBase></UrlBase>#<UrlBase>/radarr</UrlBase>#' /configs/radarr/confi
 
 ## Wait for Sonarr to create config file on first start and edit it
 until [ -f /configs/sonarr/config.xml ]; do sleep 1; done
-sed -i 's#<UrlBase></UrlBase>#<UrlBase>/radarr</UrlBase>#' /configs/sonarr/config.xml
+sed -i 's#<UrlBase></UrlBase>#<UrlBase>/sonarr</UrlBase>#' /configs/sonarr/config.xml
 
 ## Wait for Jackett to create config file on first start and edit it
 until [ -f /configs/jackett/Jackett/ServerConfig.json ]; do sleep 1; done
