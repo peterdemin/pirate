@@ -26,8 +26,7 @@ services:
       - TZ=Etc/UTC
     volumes:
       - /configs/radarr:/config
-      - /data/movies:/movies
-      - /data/downloads:/downloads
+      - /data:/data
     ports:
       - 7878:7878
     restart: unless-stopped
@@ -41,8 +40,7 @@ services:
       - TZ=Etc/UTC
     volumes:
       - /configs/sonarr:/config
-      - /data/tv:/tv
-      - /data/downloads:/downloads
+      - /data:/data
     ports:
       - 8989:8989
     restart: unless-stopped
@@ -56,8 +54,7 @@ services:
       - TZ=Etc/UTC
     volumes:
       - /configs/sabnzbd:/config
-      - /data/downloads:/downloads
-      - /data/incomplete:/downloads/incomplete
+      - /data:/data
     ports:
       - 8080:8080
     restart: unless-stopped
