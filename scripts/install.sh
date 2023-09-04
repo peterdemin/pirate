@@ -71,11 +71,32 @@ systemctl restart docker-compose-app
 source /scripts/install.env
 if [ "${NORDVPN_TOKEN}" ]
 then
-    sh <(curl -sSf https://downloads.nordcdn.com/apps/linux/install.sh) -- -n
+    which nordvpn || sh <(curl -sSf https://downloads.nordcdn.com/apps/linux/install.sh) -- -n
     nordvpn login --token "${NORDVPN_TOKEN}"
     ## Whitelist local network BEFORE connecting
     ip route \
         | grep -oE '[0-9]{2,3}\.[0-9]{1,3}\.[0-9]{1,3}\.0\/[0-9]{2}' \
         | xargs -L1 nordvpn whitelist add subnet
-    nordvpn connect
+
+    cat >/etc/systemd/system/nordvpn-connect.service <<EOF
+[Unit]
+Description=Connect NordVPN
+Requires=nordvpnd.service
+After=nordvpnd.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/nordvpn connect
+Restart=on-failure
+RestartSec=5
+User=root
+Group=nordvpn
+RemainAfterExit=yes
+
+[Install]
+WantedBy=default.target
+EOF
+    systemctl daemon-reload
+    systemctl enable nordvpn-connect.service
+    systemctl start nordvpn-connect.service
 fi
