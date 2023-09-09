@@ -1,3 +1,6 @@
 /.vagrant/
 *.swp
 scripts/install.env
+configs
+data
+.vagrant.d/
