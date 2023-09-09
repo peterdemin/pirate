@@ -69,7 +69,7 @@ services:
       - DELUGE_LOGLEVEL=error
     volumes:
       - /configs/deluge:/config
-      - /data/downloads:/downloads
+      - /data:/data
     ports:
       - 8112:8112
       - 6881:6881
