@@ -45,6 +45,20 @@ services:
       - 8989:8989
     restart: unless-stopped
 
+  lidarr:
+    image: lscr.io/linuxserver/lidarr:latest
+    container_name: lidarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - /configs/lidarr:/config
+      - /data:/data
+    ports:
+      - 8686:8686
+    restart: unless-stopped
+
   sabnzbd:
     image: lscr.io/linuxserver/sabnzbd:latest
     container_name: sabnzbd
