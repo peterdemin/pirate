@@ -1,0 +1,16 @@
+[Unit]
+Description=Pirate VM
+Requires=network.target
+After=network.target
+
+[Service]
+Type=oneshot
+User=pirate
+Group=pirate
+WorkingDirectory=/home/pirate/pirate
+ExecStart=/usr/bin/vagrant up
+ExecStop=/usr/bin/vagrant destroy -f
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
