@@ -2,8 +2,7 @@
 Description=Update vagrant box daily
 
 [Timer]
-OnCalendar=daily
-RandomizedDelaySec=12h
+OnCalendar=02:00
 Persistent=true
 
 [Install]
