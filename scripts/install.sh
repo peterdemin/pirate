@@ -1,11 +1,12 @@
 #!/bin/bash
 
-set -e -o pipefail
+set -e -o pipefail -x
 
 # Install docker
 
 ## Update the apt package index and install packages to allow apt to use a repository over HTTPS:
 apt-get update
+apt-get upgrade -y
 apt-get install -y ca-certificates curl gnupg
 
 ## Add Docker’s official GPG key:
@@ -71,8 +72,8 @@ systemctl restart docker-compose-app
 source /scripts/install.env
 if [ "${NORDVPN_TOKEN}" ]
 then
-    which nordvpn || sh <(curl -sSf https://downloads.nordcdn.com/apps/linux/install.sh) -- -n
-    yes n | nordvpn login --token "${NORDVPN_TOKEN}"
+    which nordvpn || curl -sSf https://downloads.nordcdn.com/apps/linux/install.sh > nord.sh && chmod +x nord.sh && ./nord.sh -n
+    yes n | nordvpn login --token "${NORDVPN_TOKEN}" || true
     ## Whitelist local network BEFORE connecting
     ip route \
         | grep -oE '[0-9]{2,3}\.[0-9]{1,3}\.[0-9]{1,3}\.0\/[0-9]{2}' \
